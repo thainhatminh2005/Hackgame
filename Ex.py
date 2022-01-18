@@ -1,4 +1,4 @@
 a = [1]
 b = [1]
-c=[a,b]
-print(c.index(b))
+c=[a,b, None]
+print(c)
