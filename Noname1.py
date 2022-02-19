@@ -62,17 +62,19 @@ class Modal(list):
                     self.ability.append((x, y))
 
     def move(self, step):
+        print("move: ", step)
         x = step[0]
         y = step[1]
         color = self[x].first_color
         self[x].pour()
         self[y].add(color)
+        self.check_finish()
         self.get_move()
 
     def redo(self, step):
         new_step = (step[1], step[0])
         self.move(new_step)
-        print(new_step)
+        print("redo:", new_step)
 
     def check_finish(self):
         self.is_finish = True
@@ -90,21 +92,27 @@ class TreeStep:
         self.modal = modal
 
     def recursive_play(self, current_step):
+        i = 0
+        # print("modal: ")
+        # for cup in modal:
+        #    print(cup, i, cup.is_full, cup.is_finish)
+        #    i += 1
         self.t +=1
-        print(self.t)
+        # print(self.t)
         self.modal.move(current_step)
         step_list = self.modal.ability
         self.modal.check_finish()
-        print(step_list)
+        # print(step_list)
         for step in step_list:
             if self.modal.is_finish:
                 break
-            print(step)
+            if step == (current_step[1], current_step[0]):
+                # print("step except: ", step, "  Current: ", current_step)
+                continue
             self.recursive_play(step)
         if self.modal.is_finish:
             self.step_log.insert(0, current_step)
         self.t -=1
-        print(current_step)
         self.modal.redo(current_step)
 
 
