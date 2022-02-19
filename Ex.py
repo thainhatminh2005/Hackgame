@@ -73,8 +73,3 @@ class Cup(list):
         self.size -= 1
         self._check_state()
 
-
-a = Cup(1,2)
-b = Cup(1,2)
-
-print(a==b, [a,1,0 ] == [b, 1])
